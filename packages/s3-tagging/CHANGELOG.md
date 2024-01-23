@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.4](https://github.com/twentyfourg/brian-lerna-test/compare/s3-tagging@1.0.3...s3-tagging@1.0.4) (2024-01-23)
+
+
+### Bug Fixes
+
+* **s3-tagging:** patch test 3 ([77e1425](https://github.com/twentyfourg/brian-lerna-test/commit/77e1425d642a684404dded2165af19e32fac4d44))
+
+
+
+
+
 ## [1.0.3](https://github.com/twentyfourg/brian-lerna-test/compare/s3-tagging@1.0.2...s3-tagging@1.0.3) (2024-01-23)
 
 
