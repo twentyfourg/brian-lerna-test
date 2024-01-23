@@ -18,7 +18,7 @@
     "url": "git+https://github.com/twentyfourg/brian-lerna-test.git"
   },
   "scripts": {
-    "test": "node ./__tests__/s3-tagging.test.js"
+    "package": "ncc build"
   },
   "bugs": {
     "url": "https://github.com/twentyfourg/brian-lerna-test/issues"

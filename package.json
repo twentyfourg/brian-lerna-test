@@ -1,11 +1,20 @@
 {
   "name": "root",
+  "description": "Monorepo of 24G Github actions and workflows",
   "private": true,
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^8.0.2",
-    "ncc": "^0.3.6"
+    "@vercel/ncc": "^0.38.1",
+    "lerna": "^8.0.2"
+  },
+  "scripts": {
+    "package": "ncc build"
+  },
+  "author": {
+    "name": "24G",
+    "url": "https://24g.com",
+    "organization": true
   }
 }

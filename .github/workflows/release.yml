@@ -6,7 +6,7 @@ on:
       - master
 jobs:
   publish-gpr:
-    name: Publish to GPR
+    name: Publish Actions
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -18,10 +18,9 @@ jobs:
       - name: Bump versions and publish packages
         run: |
           npm install
-          npx lerna exec npm install
-          npx lerna exec npx ncc build
+          npx lerna exec npm run package
           git add *dist/* --force
-          git commit -m 'chore: Update dist'
+          git commit -m "chore: Update dist" || echo "No changes to commit"
           npx lerna version --conventional-commits --create-release github --yes
         env:
           GH_TOKEN: ${{ secrets.SEMANTIC_PAT }}
