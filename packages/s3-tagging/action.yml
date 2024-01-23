@@ -1,0 +1,33 @@
+# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions
+name: S3 Tagging
+description: Tags all objects in a S3 bucket
+author: 24G
+
+# Define your inputs here.
+inputs:
+  bucket-name:
+    description: S3 bucket containing the objects to tag
+    required: true
+  filters:
+    description: Map of key filters and tags to apply to those filters
+    required: false
+    default: '{"*": ["deprecated=true"]}'
+  batch-size:
+    description: The number of files to tag at once. This effects how long it takes to take all the items in a bucket.
+    required: false
+    default: "10"
+  region:
+    description: AWS region to use.
+    required: false
+    default: "us-east-1"
+outputs:
+  bucket-name: 
+    description: S3 bucket containing the objects to tag
+
+runs:
+  using: node20
+  main: ./index.js
+
+branding:
+  icon: 'tag'
+  color: 'green'

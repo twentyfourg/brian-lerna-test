@@ -1,0 +1,21 @@
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ASIA3N2Z6JGNBJOTOXX6
+          aws-secret-access-key: CvXx+oEQytGoVi9e1PdHMY1KejB0ttHa5cwEznz+
+          aws-session-token: IQoJb3JpZ2luX2VjEJT//////////wEaCXVzLWVhc3QtMSJHMEUCIQCBcOLbAKYNYCPoO63IJlR58E/dBv4bIY9ClP+BCBa2GwIgI302AJUHPlWkXXPEg0htXrjz4VTBB1I+S8R+3wL70rUqlAMITBADGgw3ODU2MzA3NzU3MDYiDPAWZQ0FqaAMZN6tLSrxAmivPlDQ/KVonY9qtRDxdwPQ/ApGSn1lbQyD+1hCa87LI3attWE0ZVoFhG/1UlELZYlWC8vOPS9z6P1ziIQdAq4hHfvPVqJKKkpf/huZe3u85dm/LggM3pEObgIsFRUy0WbX5AORUGExvYqq996bbE/iUmKHr5U3OGTX8ptRQSWk+ut3/mKdpINXxH6sYjPKLMdhSy37hWbnNY709zn3Vult2y66Q8xYZ3g+JTqi51nYpeyoMhOdueUVVPEx6+uMg/qrmmkgh8gTUaknBx5K77gulo++ExbQLKDVLgWoEn/1o0Digv2xrUNAK8et1ofFSTnifWutpntjFmhqjL7/iA0U3cH1CJ+tzf54daQJSDkMwhElw8RLHMBJphnNui+pjHTpYMpDwRvtnicaWGSZmWR6njAnTs/j/vsQ5UDVEQ8BtSvzLg88TSQe4eHQMaW5bOQTr97K0UcpEV6meUt/jWrzOLElQ+TSZAquJTbuVBF67zCz/rqtBjqmAVYWDWdb6wHlOS2w6wgeS2plDAPFuqN84I1W/oi29w+x1FIgk/WU0wUWv+2oDtKsjTcie1K5Ppfcdm5GpbtXRzaybcrPtfpzqyrFatPuw6iB4w4l1JjnCvzsJEAmLRVxbZEurFSfKttn20DrnLuigtkx+CGMIVvrLeJ7km+TWfHbspuQjbN3nCsOahlXiKscw5gUZKHTmzPWyhyLTvloiuvOC16tGs4=
+          aws-region: us-east-1
+      - name: Hello world action step
+        id: hello
+        uses: ./
+        with:
+          bucket-name: 'brian-tag-testing'
