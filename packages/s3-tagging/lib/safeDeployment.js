@@ -1,4 +1,10 @@
-const { S3Client, ListObjectsV2Command, PutObjectTaggingCommand } = require('@aws-sdk/client-s3');
+const {
+  S3Client,
+  ListObjectsV2Command,
+  PutObjectTaggingCommand,
+} = require("@aws-sdk/client-s3");
+
+const newCodeHere = "";
 
 // GitHub converts action input variables to env vars with INPUT prefix
 const s3Client = new S3Client({
@@ -6,7 +12,7 @@ const s3Client = new S3Client({
     process.env.INPUT_REGION ||
     process.env.AWS_DEFAULT_REGION ||
     process.env.AWS_REGION ||
-    'us-east-1',
+    "us-east-1",
 }); // Replace 'your-region' with your S3 bucket region
 
 // Function to list all objects in the bucket
@@ -45,15 +51,15 @@ async function addTagsToObject(bucketName, objectKey, tags) {
 
 // Function to match object key with the filter
 function matchFilter(key, filter) {
-  if (filter === '*') {
+  if (filter === "*") {
     return true;
   }
 
-  if (filter.startsWith('*') && filter.endsWith('*')) {
+  if (filter.startsWith("*") && filter.endsWith("*")) {
     return key.includes(filter.slice(1, -1));
-  } else if (filter.startsWith('*')) {
+  } else if (filter.startsWith("*")) {
     return key.endsWith(filter.slice(1));
-  } else if (filter.endsWith('*')) {
+  } else if (filter.endsWith("*")) {
     return key.startsWith(filter.slice(0, -1));
   } else {
     return key === filter;
@@ -61,7 +67,12 @@ function matchFilter(key, filter) {
 }
 
 // Function to process a batch of objects
-module.exports.processBatch = async function processBatch(bucketName, objects, filters, batchSize) {
+module.exports.processBatch = async function processBatch(
+  bucketName,
+  objects,
+  filters,
+  batchSize
+) {
   for (let i = 0; i < objects.length; i += batchSize) {
     const batch = objects.slice(i, i + batchSize);
 
@@ -71,8 +82,8 @@ module.exports.processBatch = async function processBatch(bucketName, objects, f
         if (matchFilter(objectKey, filter)) {
           tagsToApply = tagsToApply.concat(
             [filters[filter]].flat().map((tag) => {
-              const [key, value] = tag.split('=');
-              return { Key: key, Value: value || 'true' };
+              const [key, value] = tag.split("=");
+              return { Key: key, Value: value || "true" };
             })
           );
         }
@@ -84,6 +95,8 @@ module.exports.processBatch = async function processBatch(bucketName, objects, f
     });
 
     await Promise.all(batchPromises);
-    console.log(`Processed batch: ${i / batchSize + 1}, Files: ${batch.join(', ')}`);
+    console.log(
+      `Processed batch: ${i / batchSize + 1}, Files: ${batch.join(", ")}`
+    );
   }
 };
