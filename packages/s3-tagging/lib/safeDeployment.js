@@ -5,6 +5,7 @@ const {
 } = require("@aws-sdk/client-s3");
 
 const newCodeHere = "";
+const someEvenNewerCode = "";
 
 // GitHub converts action input variables to env vars with INPUT prefix
 const s3Client = new S3Client({
