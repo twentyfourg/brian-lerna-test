@@ -19,6 +19,8 @@ jobs:
         run: |
           npm install
           npx lerna exec npm run package
+          git config user.name "Lerna Bot"
+          git config user.email "LernaBot@24g.com"
           git add packages/*/dist/ --force
           git commit -m "chore: Update dist" || echo "No changes to commit"
           npx lerna version --conventional-commits --create-release github --yes
