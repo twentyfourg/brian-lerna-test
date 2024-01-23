@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/twentyfourg/brian-lerna-test/compare/s3-tagging@1.0.2...s3-tagging@1.0.3) (2024-01-23)
+
+
+### Bug Fixes
+
+* **s3-tagging:** use dist index.js ([cfe63cc](https://github.com/twentyfourg/brian-lerna-test/commit/cfe63ccec45b39a2e3e13c94eb2e41c0212a17c4))
+
+
+
+
+
 ## [1.0.2](https://github.com/twentyfourg/brian-lerna-test/compare/s3-tagging@1.0.1...s3-tagging@1.0.2) (2024-01-23)
 
 
