@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.13](https://github.com/twentyfourg/brian-lerna-test/compare/action2@1.1.8...action2@1.1.13) (2024-02-21)
+
+
+### Bug Fixes
+
+* **action2:** testing fix patch10 ([647a353](https://github.com/twentyfourg/brian-lerna-test/commit/647a353b03992ccb508bb73925404513e968763c))
+* **action2:** testing fix patch6 ([be36ef8](https://github.com/twentyfourg/brian-lerna-test/commit/be36ef89f70d7600d362c6afd01215aed8c3155c))
+* **action2:** testing fix patch7 ([2a5895a](https://github.com/twentyfourg/brian-lerna-test/commit/2a5895aadc4fe27490209f3d6ecfd7d36fc0df37))
+* **action2:** testing fix patch8 ([48ccd3d](https://github.com/twentyfourg/brian-lerna-test/commit/48ccd3d7668eae25f2d6e259e0bffed5ef68ff85))
+* **action2:** testing fix patch9 ([1bb97cc](https://github.com/twentyfourg/brian-lerna-test/commit/1bb97cca68db4fb4eab92a45f42837eb9646b9b3))
+
+
+
+
+
 ## [1.1.12](https://github.com/twentyfourg/brian-lerna-test/compare/action2@1.1.8...action2@1.1.12) (2024-02-21)
 
 
