@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/twentyfourg/brian-lerna-test/compare/action1@1.1.4...action1@1.1.5) (2024-02-21)
+
+
+### Bug Fixes
+
+* **action1:** testing fix patch1 ([13905bc](https://github.com/twentyfourg/brian-lerna-test/commit/13905bcceac07c789ff82df8be76d90dc509cdae))
+
+
+
+
+
 ## [1.1.4](https://github.com/twentyfourg/brian-lerna-test/compare/action1@1.1.3...action1@1.1.4) (2024-01-23)
 
 **Note:** Version bump only for package action1
