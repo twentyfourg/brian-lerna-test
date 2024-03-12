@@ -1,0 +1,101 @@
+0 silly argv {
+0 silly argv   _: [ 'version' ],
+0 silly argv   'tag-version-separator': '-',
+0 silly argv   tagVersionSeparator: '-',
+0 silly argv   'conventional-commits': true,
+0 silly argv   conventionalCommits: true,
+0 silly argv   'create-release': 'github',
+0 silly argv   createRelease: 'github',
+0 silly argv   yes: true,
+0 silly argv   y: true,
+0 silly argv   lernaVersion: '8.1.2',
+0 silly argv   '$0': '/tmp/lerna/dist/packages/lerna/dist/cli.js'
+0 silly argv }
+1 notice cli v8.1.2
+2 verbose packageConfigs Resolving packages based on package.json "workspaces" configuration.
+3 verbose rootPath /home/briananstett/work/brian-lerna-test
+4 silly createGitHubClient
+5 info versioning independent
+6 silly isAnythingCommitted
+7 verbose isAnythingCommitted 1
+8 silly getCurrentBranch
+9 verbose currentBranch master
+10 silly remoteBranchExists
+11 silly isBehindUpstream
+12 silly isBehindUpstream master is behind origin/master by 0 commit(s) and ahead by 1
+13 silly hasTags
+14 verbose hasTags true
+15 silly git-describe.sync "s3-tagging-1.0.15-1-gf37b7c2" => {"lastTagName":"s3-tagging-1.0.15","lastVersion":"1.0.15","refCount":"1","sha":"f37b7c2","isDirty":false}
+16 info Looking for changed packages since s3-tagging-1.0.15
+17 silly checking diff packages/action1
+18 silly no diff found in action1
+19 silly checking diff packages/action2
+20 silly no diff found in action2
+21 silly checking diff packages/s3-tagging
+22 silly found diff in packages/s3-tagging/newCode.txt
+23 verbose filtered diff [ 'packages/s3-tagging/newCode.txt' ]
+24 verbose updated s3-tagging
+25 verbose git-describe undefined => "s3-tagging-1.0.15-1-gf37b7c2"
+26 silly git-describe parsed => {"lastTagName":"s3-tagging-1.0.15","lastVersion":"s3-tagging-1.0.15","refCount":"1","sha":"f37b7c2","isDirty":false}
+27 silly independent for s3-tagging at /home/briananstett/work/brian-lerna-test/packages/s3-tagging
+28 verbose getChangelogConfig using preset "conventional-changelog-angular"
+29 silly npa Result {
+29 silly npa   type: 'tag',
+29 silly npa   registry: true,
+29 silly npa   where: undefined,
+29 silly npa   raw: 'conventional-changelog-angular',
+29 silly npa   name: 'conventional-changelog-angular',
+29 silly npa   escapedName: 'conventional-changelog-angular',
+29 silly npa   scope: undefined,
+29 silly npa   rawSpec: '',
+29 silly npa   saveSpec: null,
+29 silly npa   fetchSpec: 'latest',
+29 silly npa   gitRange: undefined,
+29 silly npa   gitCommittish: undefined,
+29 silly npa   hosted: undefined
+29 silly npa }
+30 verbose getChangelogConfig Attempting to resolve preset "conventional-changelog-angular"
+31 info getChangelogConfig Successfully resolved preset "conventional-changelog-angular"
+32 verbose independent increment 1.0.15 by patch
+33 info auto-confirmed
+34 info HERE HERE HERE
+35 info execute Creating releases...1
+36 silly lifecycle No script for "preversion" in "root", continuing
+37 silly lifecycle No script for "preversion" in "s3-tagging", continuing
+38 silly lifecycle No script for "version" in "s3-tagging", continuing
+39 silly independent for s3-tagging at /home/briananstett/work/brian-lerna-test/packages/s3-tagging
+40 silly independent writing new entry: "## [1.0.16](https://github.com/twentyfourg/brian-lerna-test/compare/s3-tagging@1.0.9...s3-tagging@1.0.16) (2024-03-12)\n\n**Note:** Version bump only for package s3-tagging\n\n\n\n"
+41 verbose independent wrote /home/briananstett/work/brian-lerna-test/packages/s3-tagging/CHANGELOG.md
+42 silly lifecycle No script for "version" in "root", continuing
+43 verbose version Updating root package-lock.json
+44 silly gitAdd [
+44 silly gitAdd   'packages/s3-tagging/package.json',
+44 silly gitAdd   'packages/s3-tagging/package-lock.json',
+44 silly gitAdd   'packages/s3-tagging/CHANGELOG.md',
+44 silly gitAdd   'package-lock.json'
+44 silly gitAdd ]
+45 silly gitCommit Publish
+45 silly gitCommit
+45 silly gitCommit  - s3-tagging-1.0.16
+46 verbose git [
+46 verbose git   'commit',
+46 verbose git   '-F',
+46 verbose git   '/tmp/c22d878c-c00b-43af-8d46-3fc0df9928dc/lerna-commit.txt'
+46 verbose git ]
+47 silly gitTag s3-tagging-1.0.16 git tag %s -m %s
+48 verbose git [ 'tag', 's3-tagging-1.0.16', '-m', 's3-tagging-1.0.16' ]
+49 silly lifecycle No script for "postversion" in "s3-tagging", continuing
+50 silly lifecycle No script for "postversion" in "root", continuing
+51 info git Pushing tags...
+52 silly gitPush origin master
+53 silly parseGitRepo
+54 verbose git [ 'config', '--get', 'remote.origin.url' ]
+55 error TypeError: Cannot read properties of undefined (reading 'options')
+55 error     at /tmp/lerna/dist/packages/lerna/dist/index.js:7562:93
+55 error     at Array.find (<anonymous>)
+55 error     at /tmp/lerna/dist/packages/lerna/dist/index.js:7562:53
+55 error     at Array.map (<anonymous>)
+55 error     at createRelease (/tmp/lerna/dist/packages/lerna/dist/index.js:7561:18)
+55 error     at /tmp/lerna/dist/packages/lerna/dist/index.js:8157:19
+55 error     at /tmp/lerna/node_modules/p-waterfall/index.js:5:43
+55 error     at next (/tmp/lerna/node_modules/p-reduce/index.js:17:9)
