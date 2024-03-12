@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.17](https://github.com/twentyfourg/brian-lerna-test/compare/s3-tagging@1.0.9...s3-tagging@1.0.17) (2024-03-12)
+
+**Note:** Version bump only for package s3-tagging
+
+
+
+
+
 ## [1.0.16](https://github.com/twentyfourg/brian-lerna-test/compare/s3-tagging@1.0.9...s3-tagging@1.0.16) (2024-03-12)
 
 **Note:** Version bump only for package s3-tagging
