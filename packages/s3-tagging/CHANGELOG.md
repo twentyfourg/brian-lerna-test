@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.7](https://github.com/twentyfourg/brian-lerna-test/compare/s3-tagging@1.0.6...s3-tagging@1.0.7) (2024-03-12)
+
+
+### Bug Fixes
+
+* **s3-tagging:** lerna version seperator 1 ([b24d29b](https://github.com/twentyfourg/brian-lerna-test/commit/b24d29bd2c5d853a0be2e659949fc0f9d445cdb0))
+
+
+
+
+
 ## [1.0.6](https://github.com/twentyfourg/brian-lerna-test/compare/s3-tagging@1.0.5...s3-tagging@1.0.6) (2024-01-23)
 
 **Note:** Version bump only for package s3-tagging
