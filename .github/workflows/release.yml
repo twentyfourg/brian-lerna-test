@@ -15,6 +15,8 @@ jobs:
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v43
+        with:
+          json: 'true'
 
       # You can add more steps that use the output from changed-files here.
       # Example: Print names of changed files
