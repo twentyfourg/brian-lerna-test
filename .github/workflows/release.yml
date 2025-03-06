@@ -1,40 +1,40 @@
-name: Release
+# name: Release
 
-on:
-  push:
-    branches:
-      - master
-jobs:
-  publish-gpr:
-    name: Publish Actions
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v43
-        with:
-          json: 'true'
+# on:
+#   push:
+#     branches:
+#       - master
+# jobs:
+#   publish-gpr:
+#     name: Publish Actions
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0
+#       - name: Get changed files
+#         id: changed-files
+#         uses: tj-actions/changed-files@v43
+#         with:
+#           json: 'true'
 
-      # You can add more steps that use the output from changed-files here.
-      # Example: Print names of changed files
-      - name: Print changed files
-        run: |
-          echo "Changed files: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}"
-        shell: bash
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 20
-      - name: Bump versions and publish packages
-        run: |
-          npm install
-          npx lerna exec npm run package
-          git config user.name "Lerna Bot"
-          git config user.email "LernaBot@24g.com"
-          git add packages/*/dist/ --force
-          git commit -m "chore: Update dist" || echo "No changes to commit"
-          npx lerna version --conventional-commits --create-release github --yes
-        env:
-          GH_TOKEN: ${{ secrets.SEMANTIC_PAT }}
+#       # You can add more steps that use the output from changed-files here.
+#       # Example: Print names of changed files
+#       - name: Print changed files
+#         run: |
+#           echo "Changed files: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}"
+#         shell: bash
+#       - uses: actions/setup-node@v1
+#         with:
+#           node-version: 20
+#       - name: Bump versions and publish packages
+#         run: |
+#           npm install
+#           npx lerna exec npm run package
+#           git config user.name "Lerna Bot"
+#           git config user.email "LernaBot@24g.com"
+#           git add packages/*/dist/ --force
+#           git commit -m "chore: Update dist" || echo "No changes to commit"
+#           npx lerna version --conventional-commits --create-release github --yes
+#         env:
+#           GH_TOKEN: ${{ secrets.SEMANTIC_PAT }}

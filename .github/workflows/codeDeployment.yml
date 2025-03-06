@@ -1,0 +1,38 @@
+name: Code Deployment
+run-name: ${{ github.event_name == 'workflow_dispatch' && format('Manual deployment of {0} to {1}',  github.ref_name, inputs.environment) || null }}
+on:
+  push:
+    branches:
+      - dev
+      - qa
+      - prod
+      - release/*
+      - feature/*
+      - 'dev/[1-4]'
+      - hotfix/1
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to.'
+        default: dev
+
+permissions:
+  id-token: write
+  contents: write
+jobs:
+  environment:
+    name: Environment
+    uses: ./.github/workflows/environment.yml
+  test:
+    name: Test
+    needs: environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        run: |
+          echo "Environment: ${{ needs.environment.outputs.environment }}"
+          echo "Environment Capitalize Underscore: ${{ needs.environment.outputs.environment-capitalize-underscore }}"
+          echo "Environment ECR Policy Prefix: ${{ needs.environment.outputs.environment-ecr-policy-prefix }}"
+          echo "Vault ID: ${{ needs.environment.outputs.vaultID }}"
+          echo "Push Event: ${{ needs.environment.outputs.push-event }}"
+          echo "Manual Event: ${{ needs.environment.outputs.manual-event }}"

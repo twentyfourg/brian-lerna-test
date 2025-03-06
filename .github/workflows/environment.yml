@@ -1,0 +1,114 @@
+on:
+  workflow_call:
+    inputs:
+      vaultID:
+        type: string
+        description: 'ID of the vault secret, only necessary if your vault secret differs from the job number in the repo name.'
+        default: ''
+      environment_override:
+        type: string
+        description: 'Override the environment detection logic and explicitly set the environment'
+        required: false
+        default: ''
+    outputs:
+      environment:
+        description: "The name of the environment to use. Value is based off the branch name or based on the 'Environment' input variable from the manual action."
+        value: ${{ jobs.environment.outputs.environment }}
+      environment-capitalize-underscore:
+        description: "The same value as the 'environment' output but capitalized and with dashes replaced with underscores."
+        value: ${{ jobs.environment.outputs.environment-capitalize-underscore}}
+      environment-ecr-policy-prefix:
+        description: 'The ECR policy prefix for the given environment/repo.'
+        value: ${{ jobs.environment.outputs.environment-ecr-policy-prefix }}
+      vaultID:
+        description: 'The Vault ID for the given environment/repo. Will be in the format of 1234-1.'
+        value: ${{ jobs.environment.outputs.vaultID }}
+      push-event:
+        description: 'A code push trigger.'
+        value: ${{ jobs.environment.outputs.push-event }}
+      manual-event:
+        description: 'A manual trigger.'
+        value: ${{ jobs.environment.outputs.manual-event }}
+jobs:
+  environment:
+    runs-on: ubuntu-latest
+    name: Determine Environment
+    outputs:
+      environment: ${{ steps.environment.outputs.environment }}
+      environment-capitalize-underscore: ${{ steps.environment.outputs.environment-capitalize-underscore }}
+      environment-ecr-policy-prefix: ${{ steps.environment.outputs.environment-ecr-policy-prefix }}
+      vaultID: ${{ steps.vaultID.outputs.vaultID }}
+      push-event: ${{ steps.environment.outputs.push-event }}
+      manual-event: ${{ steps.environment.outputs.manual-event }}
+    steps:
+      - name: Get VaultID
+        id: vaultID
+        run: |
+          if [ -z "${{ inputs.vaultID }}" ]
+          then
+            VAULT_ID=$(echo ${{ github.repository }} | grep -oE '[0-9]+-[0-9]+')
+          else
+            VAULT_ID=${{ inputs.vaultID }}
+          fi
+          echo "vaultID=$VAULT_ID" >> $GITHUB_OUTPUT
+      - name: Get Branch Name
+        id: branchName
+        uses: tj-actions/branch-names@v8
+      - name: Set Environment Based On Branch, input variable, or override
+        id: environment
+        run: |
+          PUSH_EVENT=false
+          MANUAL_EVENT=false
+
+          echo "INPUTS: ${{ toJson(inputs) }}"
+          echo "GITHUB: ${{ toJson(github) }}"
+
+          # Check for environment override first
+          if [ ! -z "${{ inputs.environment_override }}" ]
+          then
+            ENVIRONMENT="${{ inputs.environment_override }}"
+            MANUAL_EVENT=true
+          elif [ ${{ github.event_name}} == "push" ]
+          then
+            if [[ ${{ steps.branchName.outputs.current_branch }} =~ ^feature/patch-.*$ ]]; then
+              ENVIRONMENT="dev"
+            elif [[ ${{ steps.branchName.outputs.current_branch }} =~ ^release/patch-.*$ ]]; then
+              ENVIRONMENT="qa"
+            elif [[ ${{ steps.branchName.outputs.current_branch }} == "master" ]]; then
+              ENVIRONMENT="prod"
+            elif [[ ${{ steps.branchName.outputs.current_branch }} == "release-next" ]]; then
+              ENVIRONMENT="stage"
+            else
+              ENVIRONMENT=$(echo ${{ steps.branchName.outputs.current_branch }} | sed 's/feature\//dev-/g' | sed 's/release\//qa-/g' | sed 's/dev\//dev-/g' | sed 's/hotfix\//hotfix-/g')
+            fi
+            PUSH_EVENT=true
+          else
+            ENVIRONMENT=${{ inputs.environment }}
+            MANUAL_EVENT=true
+          fi
+          echo "environment=$ENVIRONMENT" >> $GITHUB_OUTPUT
+
+          MODIFIED_ENV=$(echo "$ENVIRONMENT" | tr '-' '_' | tr '[:lower:]' '[:upper:]')
+          echo "environment-capitalize-underscore=$MODIFIED_ENV" >> $GITHUB_OUTPUT
+
+          # Define the associative array for special ECR policy prefixes
+          declare -A ECR_POLICY_PREFIXES=(
+            ["dev"]="dev-main"
+            ["qa"]="qa-main"
+          )
+
+          # Determine the ECR policy prefix
+          if [[ -v ECR_POLICY_PREFIXES[$ENVIRONMENT] ]]; then
+            ECR_POLICY_PREFIX="${ECR_POLICY_PREFIXES[$ENVIRONMENT]}"
+          else
+            ECR_POLICY_PREFIX="$ENVIRONMENT"
+          fi
+          echo "environment-ecr-policy-prefix=$ECR_POLICY_PREFIX" >> $GITHUB_OUTPUT
+
+          echo "push-event=$PUSH_EVENT" >> $GITHUB_OUTPUT
+          echo "manual-event=$MANUAL_EVENT" >> $GITHUB_OUTPUT
+
+          echo "## Environment Summary
+          | Environment  | ECR Policy Prefix | Push Event  | Manual Event  | Vault ID  |
+          | ------------ | ----------------- | ----------- | ------------- | --------- |
+          | $ENVIRONMENT | $ECR_POLICY_PREFIX | $PUSH_EVENT | $MANUAL_EVENT | ${{ steps.vaultID.outputs.vaultID }} |" >> $GITHUB_STEP_SUMMARY
