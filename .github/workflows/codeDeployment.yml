@@ -10,6 +10,7 @@ on:
       - feature/*
       - 'dev/[1-4]'
       - hotfix/1
+      - master
   workflow_dispatch:
     inputs:
       environment:
