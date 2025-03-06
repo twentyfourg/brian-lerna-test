@@ -64,23 +64,27 @@ jobs:
           PUSH_EVENT=false
           MANUAL_EVENT=false
 
+          echo $ENV_OVERRIDE
+          echo $GITHUB_EVENT
+          echo $CURRENT_BRANCH
+
           # Check for environment override first
-          if [ -n $ENV_OVERRIDE ]
+          if [ -n "$ENV_OVERRIDE" ]
           then
             ENVIRONMENT=$ENV_OVERRIDE
             MANUAL_EVENT=true
-          elif [[ $GITHUB_EVENT == "push" ]]
+          elif [[ "$GITHUB_EVENT" == "push" ]]
           then
-            if [[ $CURRENT_BRANCH =~ ^feature/patch-.*$ ]]; then
+            if [[ "$CURRENT_BRANCH" =~ ^feature/patch-.*$ ]]; then
               ENVIRONMENT="dev"
-            elif [[ $CURRENT_BRANCH =~ ^release/patch-.*$ ]]; then
+            elif [[ "$CURRENT_BRANCH" =~ ^release/patch-.*$ ]]; then
               ENVIRONMENT="qa"
-            elif [[ $CURRENT_BRANCH == "master" ]]; then
+            elif [[ "$CURRENT_BRANCH" == "master" ]]; then
               ENVIRONMENT="prod"
-            elif [[ $CURRENT_BRANCH == "release-next" ]]; then
+            elif [[ "$CURRENT_BRANCH" == "release-next" ]]; then
               ENVIRONMENT="stage"
             else
-              ENVIRONMENT=$(echo $CURRENT_BRANCH | sed -E 's#^(feature|release|dev|hotfix)/#\1-#')
+              ENVIRONMENT=$(echo "$CURRENT_BRANCH" | sed -E 's#^(feature|release|dev|hotfix)/#\1-#')
             fi
             PUSH_EVENT=true
           else
