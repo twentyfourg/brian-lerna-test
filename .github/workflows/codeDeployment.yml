@@ -24,6 +24,8 @@ jobs:
   environment:
     name: Environment
     uses: ./.github/workflows/environment.yml
+    with:
+      vaultID: "1234-1"
   test:
     name: Test
     needs: environment
