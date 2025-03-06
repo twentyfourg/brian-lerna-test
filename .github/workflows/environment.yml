@@ -56,37 +56,35 @@ jobs:
         uses: tj-actions/branch-names@v8
       - name: Set Environment Based On Branch, input variable, or override
         id: environment
+        env:
+          ENV_OVERRIDE: "${{ inputs.environment_override }}"
+          GITHUB_EVENT: "${{ github.event_name }}"
+          CURRENT_BRANCH: "${{ steps.branchName.outputs.current_branch }}"
         run: |
           PUSH_EVENT=false
           MANUAL_EVENT=false
 
-          echo "INPUTS: ${{ toJson(inputs) }}"
-          echo "GITHUB: ${{ toJson(github) }}"
-
           # Check for environment override first
-          if [ -n "${{ inputs.environment_override }}" ]  # Use -n (not zero length)
+          if [ -n $ENV_OVERRIDE ]
           then
-            ENVIRONMENT="${{ inputs.environment_override }}"
+            ENVIRONMENT=$ENV_OVERRIDE
             MANUAL_EVENT=true
-          # Use [[ ]] and quote variables, even if tj-actions/branch-names is reliable.
-          elif [[ "${{ github.event_name }}" == "push" ]]
+          elif [[ $GITHUB_EVENT == "push" ]]
           then
-            if [[ "${{ steps.branchName.outputs.current_branch }}" =~ ^feature/patch-.*$ ]]; then
+            if [[ $CURRENT_BRANCH =~ ^feature/patch-.*$ ]]; then
               ENVIRONMENT="dev"
-            elif [[ "${{ steps.branchName.outputs.current_branch }}" =~ ^release/patch-.*$ ]]; then
+            elif [[ $CURRENT_BRANCH =~ ^release/patch-.*$ ]]; then
               ENVIRONMENT="qa"
-            elif [[ "${{ steps.branchName.outputs.current_branch }}" == "master" ]]; then
+            elif [[ $CURRENT_BRANCH == "master" ]]; then
               ENVIRONMENT="prod"
-            elif [[ "${{ steps.branchName.outputs.current_branch }}" == "release-next" ]]; then
+            elif [[ $CURRENT_BRANCH == "release-next" ]]; then
               ENVIRONMENT="stage"
             else
-              # Use a single sed, and quote the input to sed.
-              ENVIRONMENT=$(echo "${{ steps.branchName.outputs.current_branch }}" | sed -E 's#^(feature|release|dev|hotfix)/#\1-#')
+              ENVIRONMENT=$(echo $CURRENT_BRANCH | sed -E 's#^(feature|release|dev|hotfix)/#\1-#')
             fi
             PUSH_EVENT=true
           else
-            # Handle potentially empty inputs.environment
-            ENVIRONMENT="${{ inputs.environment }}"  # Quote here too.  It's empty by default.
+            ENVIRONMENT="${{ inputs.environment }}"
             MANUAL_EVENT=true
           fi
           echo "environment=$ENVIRONMENT" >> $GITHUB_OUTPUT
@@ -101,8 +99,6 @@ jobs:
           )
 
           # Determine the ECR policy prefix
-          # This is safe because ENVIRONMENT is set within this script,
-          # and we're using an associative array.
           if [[ -v ECR_POLICY_PREFIXES[$ENVIRONMENT] ]]; then
             ECR_POLICY_PREFIX="${ECR_POLICY_PREFIXES[$ENVIRONMENT]}"
           else
